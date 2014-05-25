@@ -10,6 +10,9 @@
 
 @interface NearbyBikesViewController ()
 
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 @end
 
 @implementation NearbyBikesViewController

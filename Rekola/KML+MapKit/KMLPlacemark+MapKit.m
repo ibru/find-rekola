@@ -43,7 +43,7 @@
             NSURLRequest *request = [NSURLRequest requestWithURL:url];
             NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&error];
             if (error) {
-                DLog(@"error, %@", [error localizedDescription]);
+                NSLog(@"error, %@", [error localizedDescription]);
                 
                 // Set dot image
                 image = [UIImage imageNamed:@"dot.png"];

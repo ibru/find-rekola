@@ -33,6 +33,8 @@
 		491F79F619327B0F00EF38E4 /* MKPolygonView+KML.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F79E919327B0F00EF38E4 /* MKPolygonView+KML.m */; };
 		491F79F719327B0F00EF38E4 /* MKPolylineView+KML.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F79EB19327B0F00EF38E4 /* MKPolylineView+KML.m */; };
 		491F79F819327B0F00EF38E4 /* MKShape+KML.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F79ED19327B0F00EF38E4 /* MKShape+KML.m */; };
+		491F79FA1932805D00EF38E4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 491F79F91932805D00EF38E4 /* MapKit.framework */; };
+		491F79FE1932809900EF38E4 /* NearbyBikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F79FD1932809900EF38E4 /* NearbyBikeCell.m */; };
 		CB7F75D478B74CEE9A577825 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F049A75A63C04208842ED796 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +93,9 @@
 		491F79EB19327B0F00EF38E4 /* MKPolylineView+KML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKPolylineView+KML.m"; sourceTree = "<group>"; };
 		491F79EC19327B0F00EF38E4 /* MKShape+KML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKShape+KML.h"; sourceTree = "<group>"; };
 		491F79ED19327B0F00EF38E4 /* MKShape+KML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKShape+KML.m"; sourceTree = "<group>"; };
+		491F79F91932805D00EF38E4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		491F79FC1932809900EF38E4 /* NearbyBikeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyBikeCell.h; sourceTree = "<group>"; };
+		491F79FD1932809900EF38E4 /* NearbyBikeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyBikeCell.m; sourceTree = "<group>"; };
 		DE76471B414E4395AF679AA4 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F049A75A63C04208842ED796 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -100,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				491F79FA1932805D00EF38E4 /* MapKit.framework in Frameworks */,
 				491F799C1932789D00EF38E4 /* CoreGraphics.framework in Frameworks */,
 				491F799E1932789D00EF38E4 /* UIKit.framework in Frameworks */,
 				491F799A1932789D00EF38E4 /* Foundation.framework in Frameworks */,
@@ -145,6 +151,7 @@
 		491F79981932789D00EF38E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				491F79F91932805D00EF38E4 /* MapKit.framework */,
 				491F79991932789D00EF38E4 /* Foundation.framework */,
 				491F799B1932789D00EF38E4 /* CoreGraphics.framework */,
 				491F799D1932789D00EF38E4 /* UIKit.framework */,
@@ -217,8 +224,7 @@
 		491F79D319327AB500EF38E4 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				491F79B11932789D00EF38E4 /* NearbyBikesViewController.h */,
-				491F79B21932789D00EF38E4 /* NearbyBikesViewController.m */,
+				491F79FB1932806F00EF38E4 /* Nearby bikes */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -259,6 +265,17 @@
 				491F79ED19327B0F00EF38E4 /* MKShape+KML.m */,
 			);
 			path = "MKMap+KML";
+			sourceTree = "<group>";
+		};
+		491F79FB1932806F00EF38E4 /* Nearby bikes */ = {
+			isa = PBXGroup;
+			children = (
+				491F79B11932789D00EF38E4 /* NearbyBikesViewController.h */,
+				491F79B21932789D00EF38E4 /* NearbyBikesViewController.m */,
+				491F79FC1932809900EF38E4 /* NearbyBikeCell.h */,
+				491F79FD1932809900EF38E4 /* NearbyBikeCell.m */,
+			);
+			name = "Nearby bikes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -406,6 +423,7 @@
 				491F79B31932789D00EF38E4 /* NearbyBikesViewController.m in Sources */,
 				491F79F619327B0F00EF38E4 /* MKPolygonView+KML.m in Sources */,
 				491F79F319327B0F00EF38E4 /* KMLRoot+MapKit.m in Sources */,
+				491F79FE1932809900EF38E4 /* NearbyBikeCell.m in Sources */,
 				491F79AA1932789D00EF38E4 /* AppDelegate.m in Sources */,
 				491F79A61932789D00EF38E4 /* main.m in Sources */,
 			);
