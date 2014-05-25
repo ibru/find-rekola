@@ -43,7 +43,9 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     self.geometries = @[];
     self.filteredGeometries = @[];
     
+    self.title = NSLocalizedString(@"Nearby bikes", @"");
     
+    [self indicateLoadingFinished];
     [self reloadAllData];
 }
 
@@ -107,7 +109,9 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     KMLPlacemark *placemark = geometry.placemark;
     
     cell.nameLabel.text = placemark.name;
-    cell.descriptionLabel.text = placemark.descriptionValue;
+    
+    NSString *description = [placemark.descriptionValue stringByReplacingOccurrencesOfString:@"<br />" withString:@"\n"];
+    cell.descriptionLabel.text = description;
     
     // compute distance from user's position
     MKShape *shape = [geometry mapkitShape];
@@ -174,8 +178,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 
 - (void)loadKMLAtURL:(NSURL *)url withSuccess:(void(^)())success failure:(void(^)(NSError *error))failure
 {
-    [SVProgressHUD show];
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+    [self indicateLoadingStarted];
     
     // remove all annotations and overlays
     NSMutableArray *annotations = @[].mutableCopy;
@@ -201,7 +204,6 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
                                                       }
          ];
         
-        
         self.kml = [KMLParser parseKMLAtURL:url];
         
         // remove KML format error observer
@@ -217,16 +219,14 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
             self.geometries = self.kml.geometries;
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD dismiss];
-                self.navigationItem.rightBarButtonItem.enabled = YES;
+                [self indicateLoadingFinished];
                 
                 if (success)
                     success();
             });
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [SVProgressHUD dismiss];
-                self.navigationItem.rightBarButtonItem.enabled = YES;
+                [self indicateLoadingFinished];
                 
                 NSError *error = [NSError errorWithDomain:@"KML"
                                                      code:1
@@ -270,6 +270,9 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
         __block MKMapRect zoomRect = MKMapRectNull;
         [self.mapView.annotations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
          {
+             if (idx > 5)
+                 return; // zoom to first 5 places only
+             
              id<MKAnnotation> annotation = (id<MKAnnotation>)obj;
              MKMapPoint annotationPoint = MKMapPointForCoordinate(annotation.coordinate);
              MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
@@ -283,5 +286,31 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     });
 }
 
+- (void)indicateLoadingStarted
+{
+    static UIActivityIndicatorView *indicator = nil;
+    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [indicator startAnimating];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:indicator];
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+- (void)indicateLoadingFinished
+{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                                           target:self
+                                                                                           action:@selector(refreshButtonTouched:)];
+    
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+}
+
+#pragma mark -- actions
+
+- (void)refreshButtonTouched:(id)sender
+{
+    [self reloadAllData];
+}
 
 @end
