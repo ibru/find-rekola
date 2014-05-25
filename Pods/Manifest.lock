@@ -1,0 +1,20 @@
+PODS:
+  - iOS-KML-Framework (1.0.0):
+    - TBXML (~> 1.5)
+  - SVProgressHUD (1.0)
+  - TBXML (1.5)
+
+DEPENDENCIES:
+  - iOS-KML-Framework (from `https://github.com/FLCLjp/iOS-KML-Framework.git`)
+  - SVProgressHUD (~> 1.0)
+
+EXTERNAL SOURCES:
+  iOS-KML-Framework:
+    :git: https://github.com/FLCLjp/iOS-KML-Framework.git
+
+SPEC CHECKSUMS:
+  iOS-KML-Framework: af22c3c41f4205ddf565ee5b925749d9adec5606
+  SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
+  TBXML: a279440030ba55c40e1455cafba3b0a44e1963d4
+
+COCOAPODS: 0.32.1
