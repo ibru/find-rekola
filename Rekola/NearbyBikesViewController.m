@@ -144,8 +144,13 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     MKShape *shape = [geometry mapkitShape];
     
     [self.mapView setCenterCoordinate:shape.coordinate animated:YES];
-    if ([shape isKindOfClass:[MKPointAnnotation class]]) {
-        [self.mapView selectAnnotation:shape animated:YES];
+    
+    double epsilon = 0.00000005;
+    for (id<MKAnnotation> currentAnnotation in self.mapView.annotations) {
+        if ((fabs(currentAnnotation.coordinate.latitude - shape.coordinate.latitude) <= epsilon &&
+             fabs(currentAnnotation.coordinate.longitude - shape.coordinate.longitude) <= epsilon)) {
+            [self.mapView selectAnnotation:currentAnnotation animated:YES];
+        }
     }
 }
 
