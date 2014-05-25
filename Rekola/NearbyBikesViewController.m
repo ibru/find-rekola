@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Jiri Urbasek. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "NearbyBikesViewController.h"
 
-@interface ViewController ()
+@interface NearbyBikesViewController ()
 
 @end
 
-@implementation ViewController
+@implementation NearbyBikesViewController
 
 - (void)viewDidLoad
 {
