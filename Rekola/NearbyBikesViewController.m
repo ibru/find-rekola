@@ -31,7 +31,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic) KMLRoot *kml;
-@property (nonatomic) NSArray *geometries;
+@property (nonatomic) NSArray *sortedGeometries;
 @property (nonatomic) NSArray *filteredGeometries;
 
 @end
@@ -46,7 +46,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 {
     [super viewDidLoad];
     
-    self.geometries = @[];
+    self.sortedGeometries = @[];
     self.filteredGeometries = @[];
     
     self.title = NSLocalizedString(@"Nearby bikes", @"");
@@ -105,12 +105,12 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.geometries.count;
+    return self.sortedGeometries.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    KMLAbstractGeometry *geometry = self.geometries[indexPath.row];
+    KMLAbstractGeometry *geometry = self.sortedGeometries[indexPath.row];
     NearbyBikeCell *cell = (NearbyBikeCell *)[tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
     KMLPlacemark *placemark = geometry.placemark;
     
@@ -138,7 +138,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    KMLAbstractGeometry *geometry = self.geometries[indexPath.row];
+    KMLAbstractGeometry *geometry = self.sortedGeometries[indexPath.row];
     
     // move to the selected annotation
     MKShape *shape = [geometry mapkitShape];
@@ -151,7 +151,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    KMLAbstractGeometry *geometry = self.geometries[indexPath.row];
+    KMLAbstractGeometry *geometry = self.sortedGeometries[indexPath.row];
     
     //[self pushDetailViewControllerWithGeometry:geometry];
 }
@@ -219,7 +219,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
             [defaults setObject:urlString forKey:@"url"];
             [defaults synchronize];
             
-            self.geometries = [self.kml.geometries sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            self.sortedGeometries = [self.kml.geometries sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
                 
                 if (![obj1 isKindOfClass:[KMLAbstractGeometry class]] || ![obj1 isKindOfClass:[KMLAbstractGeometry class]])
                     return NSOrderedSame;
@@ -258,9 +258,9 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 {
     NSMutableArray *annotations = @[].mutableCopy;
     NSMutableArray *overlays = @[].mutableCopy;
+    __block MKMapRect zoomRect = MKMapRectNull;
     
-    [self.geometries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-     {
+    [self.sortedGeometries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
          KMLAbstractGeometry *geometry = (KMLAbstractGeometry *)obj;
          MKShape *mkShape = [geometry mapkitShape];
          if (mkShape) {
@@ -269,6 +269,19 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
              }
              else if ([mkShape isKindOfClass:[MKPointAnnotation class]]) {
                  [annotations addObject:mkShape];
+             }
+             
+             // zoom to first 5 places only
+             if (idx < 5) {
+                 CLLocation *location = [geometry location];
+                 MKMapPoint annotationPoint = MKMapPointForCoordinate(location.coordinate);
+                 MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
+                 
+                 if (MKMapRectIsNull(zoomRect)) {
+                     zoomRect = pointRect;
+                 } else {
+                     zoomRect = MKMapRectUnion(zoomRect, pointRect);
+                 }
              }
          }
      }];
@@ -279,25 +292,16 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     // set zoom in next run loop.
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        //
-        // Thanks for elegant code!
-        // https://gist.github.com/915374
-        //
-        __block MKMapRect zoomRect = MKMapRectNull;
-        [self.mapView.annotations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-         {
-             if (idx > 5)
-                 return; // zoom to first 5 places only
-             
-             id<MKAnnotation> annotation = (id<MKAnnotation>)obj;
-             MKMapPoint annotationPoint = MKMapPointForCoordinate(annotation.coordinate);
-             MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
-             if (MKMapRectIsNull(zoomRect)) {
-                 zoomRect = pointRect;
-             } else {
-                 zoomRect = MKMapRectUnion(zoomRect, pointRect);
-             }
-         }];
+        // include users location into map visible area
+        MKMapPoint annotationPoint = MKMapPointForCoordinate(self.mapView.userLocation.coordinate);
+        MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
+        
+        if (MKMapRectIsNull(zoomRect)) {
+            zoomRect = pointRect;
+        } else {
+            zoomRect = MKMapRectUnion(zoomRect, pointRect);
+        }
+        
         [self.mapView setVisibleMapRect:zoomRect animated:YES];
     });
 }
