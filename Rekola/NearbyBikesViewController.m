@@ -19,6 +19,12 @@ static NSString *const kKMLSourceURL        = @"http://moje.rekola.cz/api/bikes/
 static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 
 
+@interface KMLAbstractGeometry (DistanceCompare)
+- (CLLocation *)location;
+@end
+
+#pragma mark -
+
 @interface NearbyBikesViewController () <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
@@ -114,10 +120,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     cell.descriptionLabel.text = description;
     
     // compute distance from user's position
-    MKShape *shape = [geometry mapkitShape];
-    CLLocation *pointLocation = [[CLLocation alloc] initWithLatitude:shape.coordinate.latitude
-                                                           longitude:shape.coordinate.longitude];
-    CLLocationDistance meters = [self.mapView.userLocation.location distanceFromLocation:pointLocation];
+    CLLocationDistance meters = [self.mapView.userLocation.location distanceFromLocation:[geometry location]];
     
     NSString *distance = [NSString stringWithFormat:@"%d m", (int)ceil(meters)];
     if (meters > 1000)
@@ -216,7 +219,20 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
             [defaults setObject:urlString forKey:@"url"];
             [defaults synchronize];
             
-            self.geometries = self.kml.geometries;
+            self.geometries = [self.kml.geometries sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                
+                if (![obj1 isKindOfClass:[KMLAbstractGeometry class]] || ![obj1 isKindOfClass:[KMLAbstractGeometry class]])
+                    return NSOrderedSame;
+                
+                CLLocationDistance meters1 = [self.mapView.userLocation.location distanceFromLocation:[(KMLAbstractGeometry *)obj1 location]];
+                CLLocationDistance meters2 = [self.mapView.userLocation.location distanceFromLocation:[(KMLAbstractGeometry *)obj2 location]];
+                
+                if (meters1 > meters2)
+                    return NSOrderedDescending;
+                else if (meters1 < meters2)
+                    return NSOrderedAscending;
+                return NSOrderedSame;
+            }];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self indicateLoadingFinished];
@@ -314,3 +330,20 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 }
 
 @end
+
+#pragma mark -
+
+@implementation KMLAbstractGeometry (DistanceCompare)
+
+- (CLLocation *)location
+{
+    MKShape *shape = [self mapkitShape];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:shape.coordinate.latitude
+                                                      longitude:shape.coordinate.longitude];
+    return location;
+}
+
+@end
+
+
+
