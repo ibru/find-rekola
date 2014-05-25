@@ -124,7 +124,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     
     NSString *distance = [NSString stringWithFormat:@"%d m", (int)ceil(meters)];
     if (meters > 1000)
-        distance = [NSString stringWithFormat:@"%.2f km", meters/1000];
+        distance = [NSString stringWithFormat:@"%.1f km", meters/1000];
     
     cell.distanceLabel.text = distance;
     
