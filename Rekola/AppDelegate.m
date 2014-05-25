@@ -13,6 +13,21 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    UIColor *pinkColor = [UIColor colorWithRed:251.0/255.0 green:12.0/255.0 blue:135.0/255.0 alpha:1];
+    UIColor *greenColor = [UIColor colorWithRed:89.0/255.0 green:125.0/255.0 blue:27.0/255.0 alpha:1];
+    UIColor *whiteColor = [UIColor whiteColor];
+    
+    [UINavigationBar appearance].tintColor = whiteColor;
+    [UINavigationBar appearance].barTintColor = pinkColor;
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : whiteColor}];
+
+    [UIButton appearance].tintColor = greenColor;
+    
+    [UITableView appearance].separatorColor = pinkColor;
+    
+    [UITableViewCell appearance].tintColor = greenColor;
+    
     return YES;
 }
 							
