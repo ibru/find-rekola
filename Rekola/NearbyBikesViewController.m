@@ -184,17 +184,6 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 {
     [self indicateLoadingStarted];
     
-    // remove all annotations and overlays
-    NSMutableArray *annotations = @[].mutableCopy;
-    [self.mapView.annotations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-     {
-         if (![obj isKindOfClass:[MKUserLocation class]]) {
-             [annotations addObject:obj];
-         }
-     }];
-    [self.mapView removeAnnotations:annotations];
-    [self.mapView removeOverlays:self.mapView.overlays];
-    
     // load new KML
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -230,14 +219,14 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
                 return NSOrderedSame;
             }];
             
-            NSMutableArray *favoriteGeometries = @[].mutableCopy;
+            NSMutableArray *favoriteGeometries = [NSMutableArray array];
             NSArray *favoriteObjectIDs = [[NSUserDefaults standardUserDefaults] arrayForKey:kUserDefaultsFavoritePlacesKey];
             
             for (KMLAbstractGeometry *geometry in self.allGeometries) {
                 if ([favoriteGeometries count] >= [favoriteObjectIDs count])
                     break;
                 
-                if ([favoriteGeometries containsObject:geometry.objectID])
+                if ([favoriteObjectIDs containsObject:geometry.placemark.objectID])
                     [favoriteGeometries addObject:geometry];
             }
             self.favoriteGeometries = favoriteGeometries;
@@ -264,9 +253,22 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 
 - (void)reloadMapView
 {
-    NSMutableArray *annotations = @[].mutableCopy;
-    NSMutableArray *overlays = @[].mutableCopy;
+    NSMutableArray *annotations = [NSMutableArray array];
+    NSMutableArray *overlays = [NSMutableArray array];
     __block MKMapRect zoomRect = MKMapRectNull;
+    
+    // remove all annotations and overlays
+    [self.mapView.annotations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+     {
+         if (![obj isKindOfClass:[MKUserLocation class]]) {
+             [annotations addObject:obj];
+         }
+     }];
+    
+    [self.mapView removeAnnotations:annotations];
+    [self.mapView removeOverlays:self.mapView.overlays];
+    
+    [annotations removeAllObjects]; // clear annotations array to fill in new objects
     
     [self.desiredGeometries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
          KMLAbstractGeometry *geometry = (KMLAbstractGeometry *)obj;

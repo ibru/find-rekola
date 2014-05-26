@@ -66,10 +66,13 @@
 
 - (IBAction)favoriteButtonTouched:(id)sender
 {
-    NSString *objectID = self.geometry.objectID;
+    NSString *objectID = self.geometry.placemark.objectID;
     
     if (objectID != nil) {
         NSMutableArray *objectIDs = [[NSUserDefaults standardUserDefaults] arrayForKey:kUserDefaultsFavoritePlacesKey].mutableCopy;
+        
+        if (objectIDs == nil)
+            objectIDs = [NSMutableArray array];
         
         [objectIDs addObject:objectID];
         
