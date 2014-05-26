@@ -14,6 +14,9 @@
 #import "NearbyBikeCell.h"
 
 
+#define NEARBY_IDX      0
+#define FAVORITE_IDX    1
+
 static NSString *const kKMLSourceURL        = @"http://moje.rekola.cz/api/bikes/kml";
 
 static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
@@ -29,10 +32,12 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
-@property (nonatomic) KMLRoot *kml;
-@property (nonatomic) NSArray *sortedGeometries;
-@property (nonatomic) NSArray *filteredGeometries;
+@property (nonatomic, strong) KMLRoot *kml;
+@property (nonatomic, strong) NSArray *allGeometries;
+@property (nonatomic, strong) NSArray *favoriteGeometries;
+@property (nonatomic, readonly) NSArray *desiredGeometries;
 
 @end
 
@@ -46,8 +51,8 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 {
     [super viewDidLoad];
     
-    self.sortedGeometries = @[];
-    self.filteredGeometries = @[];
+    self.allGeometries = @[];
+    self.favoriteGeometries = @[];
     
     self.title = NSLocalizedString(@"Nearby bikes", @"");
     
@@ -105,12 +110,12 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.sortedGeometries.count;
+    return [self.desiredGeometries count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    KMLAbstractGeometry *geometry = self.sortedGeometries[indexPath.row];
+    KMLAbstractGeometry *geometry = self.desiredGeometries[indexPath.row];
     NearbyBikeCell *cell = (NearbyBikeCell *)[tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
     KMLPlacemark *placemark = geometry.placemark;
     
@@ -138,7 +143,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    KMLAbstractGeometry *geometry = self.sortedGeometries[indexPath.row];
+    KMLAbstractGeometry *geometry = self.desiredGeometries[indexPath.row];
     
     // move to the selected annotation
     MKShape *shape = [geometry mapkitShape];
@@ -156,7 +161,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
-    KMLAbstractGeometry *geometry = self.sortedGeometries[indexPath.row];
+    KMLAbstractGeometry *geometry = self.desiredGeometries[indexPath.row];
     
     //[self pushDetailViewControllerWithGeometry:geometry];
 }
@@ -218,13 +223,8 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
         [[NSNotificationCenter defaultCenter] removeObserver:self name:kKMLInvalidKMLFormatNotification object:nil];
         
         if (self.kml) {
-            // save curent url for next load
-            NSString *urlString = [url absoluteString];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:urlString forKey:@"url"];
-            [defaults synchronize];
             
-            self.sortedGeometries = [self.kml.geometries sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            self.allGeometries = [self.kml.geometries sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
                 
                 if (![obj1 isKindOfClass:[KMLAbstractGeometry class]] || ![obj1 isKindOfClass:[KMLAbstractGeometry class]])
                     return NSOrderedSame;
@@ -239,6 +239,18 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
                 return NSOrderedSame;
             }];
             
+            NSMutableArray *favoriteGeometries = @[].mutableCopy;
+            NSArray *favoriteObjectIDs = [[NSUserDefaults standardUserDefaults] arrayForKey:kUserDefaultsFavoritePlacesKey];
+            
+            for (KMLAbstractGeometry *geometry in self.allGeometries) {
+                if ([favoriteGeometries count] >= [favoriteObjectIDs count])
+                    break;
+                
+                if ([favoriteGeometries containsObject:geometry.objectID])
+                    [favoriteGeometries addObject:geometry];
+            }
+            self.favoriteGeometries = favoriteGeometries;
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self indicateLoadingFinished];
                 
@@ -249,9 +261,9 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self indicateLoadingFinished];
                 
-                NSError *error = [NSError errorWithDomain:@"KML"
+                NSError *error = [NSError errorWithDomain:@"KML Parsing"
                                                      code:1
-                                                 userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Could not parse KML because of unknown error", @"")}];
+                                                 userInfo:@{NSLocalizedDescriptionKey:NSLocalizedString(@"Could not read objects data because of unknown error", @"")}];
                 if (failure)
                     failure(error);
             });
@@ -265,7 +277,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     NSMutableArray *overlays = @[].mutableCopy;
     __block MKMapRect zoomRect = MKMapRectNull;
     
-    [self.sortedGeometries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [self.desiredGeometries enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
          KMLAbstractGeometry *geometry = (KMLAbstractGeometry *)obj;
          MKShape *mkShape = [geometry mapkitShape];
          if (mkShape) {
@@ -331,11 +343,25 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
+- (NSArray *)desiredGeometries
+{
+    if (self.segmentedControl.selectedSegmentIndex == FAVORITE_IDX)
+        return self.favoriteGeometries;
+    
+    return self.allGeometries;
+}
+
 #pragma mark -- actions
 
 - (void)refreshButtonTouched:(id)sender
 {
     [self reloadAllData];
+}
+
+- (IBAction)segmentedControlValueChanged:(id)sender
+{
+    [self reloadMapView];
+    [self.tableView reloadData];
 }
 
 @end
