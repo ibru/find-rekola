@@ -24,7 +24,7 @@
 
     [UIButton appearance].tintColor = greenColor;
     
-    [UITableView appearance].separatorColor = pinkColor;
+    [UITableView appearance].separatorColor = greenColor;
     
     [UITableViewCell appearance].tintColor = greenColor;
     
