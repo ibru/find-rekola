@@ -9,9 +9,10 @@
 #import "BikeDetailViewController.h"
 #import "KMLAbstractGeometry+MapKit.h"
 #import "KMLAbstractGeometry+Location.h"
+#import "MKMap+KML.h"
 
 
-@interface BikeDetailViewController ()
+@interface BikeDetailViewController () <MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
@@ -43,14 +44,26 @@
             [self.mapView addAnnotation:mkShape];
         }
     }
+    MKMapRect zoomRect = MKMapRectNull;
+    CLLocation *location = [self.geometry location];
+    MKMapPoint annotationPoint = MKMapPointForCoordinate(location.coordinate);
+    MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
     
-    CLLocationDistance meters = [self.mapView.userLocation.location distanceFromLocation:[self.geometry location]];
+    zoomRect = pointRect;
+
+    // include users location into map visible area
+    annotationPoint = MKMapPointForCoordinate(self.mapView.userLocation.coordinate);
+    pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
     
-    NSString *distance = [NSString stringWithFormat:@"%d m", (int)ceil(meters)];
-    if (meters > 1000)
-        distance = [NSString stringWithFormat:@"%.1f km", meters/1000];
+    if (MKMapRectIsNull(zoomRect)) {
+        zoomRect = pointRect;
+    } else {
+        zoomRect = MKMapRectUnion(zoomRect, pointRect);
+    }
     
-    self.distanceLabel.text = distance;
+    [self.mapView setVisibleMapRect:zoomRect animated:YES];
+    
+    [self updateDistanceFromUsersLocation];
     
     NSString *description = [placemark.descriptionValue stringByReplacingOccurrencesOfString:@"<br />" withString:@""];
     self.descriptionLabel.text = description;
@@ -64,7 +77,50 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark MKMapViewDelegate
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    [self updateDistanceFromUsersLocation];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    else if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
+        MKPointAnnotation *pointAnnotation = (MKPointAnnotation *)annotation;
+        return [pointAnnotation annotationViewForMapView:mapView];
+    }
+    
+    return nil;
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[MKPolyline class]]) {
+        return [(MKPolyline *)overlay overlayViewForMapView:mapView];
+    }
+    else if ([overlay isKindOfClass:[MKPolygon class]]) {
+        return [(MKPolygon *)overlay overlayViewForMapView:mapView];
+    }
+    
+    return nil;
+}
+
 #pragma mark Private
+
+- (void)updateDistanceFromUsersLocation
+{
+    CLLocationDistance meters = [self.mapView.userLocation.location distanceFromLocation:[self.geometry location]];
+    
+    NSString *distance = [NSString stringWithFormat:@"%d m", (int)ceil(meters)];
+    if (meters > 1000)
+        distance = [NSString stringWithFormat:@"%.1f km", meters/1000];
+    
+    self.distanceLabel.text = distance;
+}
 
 - (void)updateFavoriteButtonState
 {
