@@ -10,6 +10,12 @@
 #import "KMLAbstractGeometry+MapKit.h"
 #import "KMLAbstractGeometry+Location.h"
 #import "MKMap+KML.h"
+#import "KML.h"
+
+
+static NSString *const kExtendedDataKeyIssues   = @"issues";
+static NSString *const kExtendedDataKeyCity     = @"city";
+static NSString *const kExtendedDataKeyAddress  = @"address";
 
 
 @interface BikeDetailViewController () <MKMapViewDelegate>
@@ -34,6 +40,7 @@
     KMLPlacemark *placemark = self.geometry.placemark;
     
     self.title = placemark.name;
+    
     
     MKShape *mkShape = [self.geometry mapkitShape];
     if (mkShape) {
@@ -63,10 +70,30 @@
     
     [self.mapView setVisibleMapRect:zoomRect animated:YES];
     
+    
+    
     [self updateDistanceFromUsersLocation];
     
     NSString *description = [placemark.descriptionValue stringByReplacingOccurrencesOfString:@"<br />" withString:@""];
     self.descriptionLabel.text = description;
+    
+    
+    self.addressLabel.text = NSLocalizedString(@"Address is unknown", @"");
+    self.issuesLabel.text = NSLocalizedString(@"No issues with the bike", @"");
+    
+    [placemark.extendedData.dataList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if (![obj isKindOfClass:[KMLData class]])
+            return;
+        
+        KMLData *data = (KMLData *)obj;
+        
+        if ([data.name isEqual:kExtendedDataKeyAddress] && [data.value length])
+            self.addressLabel.text = data.value;
+        
+        else if ([data.name isEqual:kExtendedDataKeyIssues] && [data.value length])
+                self.issuesLabel.text = data.value;
+    }];
+    
     
     [self updateFavoriteButtonState];
 }
