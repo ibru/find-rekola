@@ -160,6 +160,7 @@
                         <outlet property="addressLabel" destination="9LG-VP-baT" id="lIq-jf-g7c"/>
                         <outlet property="descriptionLabel" destination="Krd-LG-J16" id="vup-Pp-fNs"/>
                         <outlet property="distanceLabel" destination="ln5-X7-0C9" id="sgz-cy-RnK"/>
+                        <outlet property="favoriteButton" destination="3LH-SY-ZPE" id="ubL-NR-8md"/>
                         <outlet property="issuesLabel" destination="AcR-ou-dLo" id="gRx-zZ-5Du"/>
                         <outlet property="mapView" destination="5tK-ei-Qbl" id="uP6-mX-VVF"/>
                     </connections>

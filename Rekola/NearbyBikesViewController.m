@@ -173,15 +173,32 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     [objectIDs addObject:objectID];
     
     [[NSUserDefaults standardUserDefaults] setObject:objectIDs forKey:kUserDefaultsFavoritePlacesKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self updateSortingAndFiltersFromKMLSource:self.kml];
     
-    // reload views if this controler is visible
-    if (self.view.window) {
-        [self reloadMapView];
-        [self.tableView reloadData];
-    }
+    [self reloadMapView];
+    [self.tableView reloadData];
+}
+
+- (void)detailController:(BikeDetailViewController *)controller didRemoveGeometryFromFavorites:(KMLAbstractGeometry *)geometry
+{
+    NSString *objectID = geometry.placemark.objectID;
+    if (objectID == nil)
+        return;
+    
+    NSMutableArray *objectIDs = [[NSUserDefaults standardUserDefaults] arrayForKey:kUserDefaultsFavoritePlacesKey].mutableCopy;
+    
+    if (objectIDs == nil)
+        objectIDs = [NSMutableArray array];
+    
+    [objectIDs removeObject:objectID];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:objectIDs forKey:kUserDefaultsFavoritePlacesKey];
+    
+    [self updateSortingAndFiltersFromKMLSource:self.kml];
+    
+    [self reloadMapView];
+    [self.tableView reloadData];
 }
 
 #pragma mark Public
@@ -380,11 +397,10 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 {
     BikeDetailViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"BikeDetailViewController"];
     viewController.delegate = self;
+    viewController.geometry = geometry;
+    viewController.isGeometryInFavorites = [[[NSUserDefaults standardUserDefaults] arrayForKey:kUserDefaultsFavoritePlacesKey] containsObject:geometry.placemark.objectID];
     
-    if (viewController) {
-        viewController.geometry = geometry;
-        [self.navigationController pushViewController:viewController animated:YES];
-    }
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 #pragma mark -- actions

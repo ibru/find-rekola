@@ -12,11 +12,13 @@
 
 
 @interface BikeDetailViewController ()
+
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *issuesLabel;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 
 @end
 
@@ -52,6 +54,8 @@
     
     NSString *description = [placemark.descriptionValue stringByReplacingOccurrencesOfString:@"<br />" withString:@""];
     self.descriptionLabel.text = description;
+    
+    [self updateFavoriteButtonState];
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,16 +66,31 @@
 
 #pragma mark Private
 
+- (void)updateFavoriteButtonState
+{
+    if (!self.isGeometryInFavorites)
+        [self.favoriteButton setTitle:NSLocalizedString(@"Add to favorites", @"") forState:UIControlStateNormal];
+    else
+        [self.favoriteButton setTitle:NSLocalizedString(@"Remove from favorites", @"") forState:UIControlStateNormal];
+}
+
 #pragma mark -- actions
 
 - (IBAction)favoriteButtonTouched:(id)sender
 {
-    NSString *objectID = self.geometry.placemark.objectID;
-    
-    if (objectID != nil) {
+    if (!self.isGeometryInFavorites) {
         if ([self.delegate respondsToSelector:@selector(detailController:didAddGeometryToFavorites:)])
             [self.delegate detailController:self didAddGeometryToFavorites:self.geometry];
+        
+        self.isGeometryInFavorites = YES;
     }
+    else {
+        if ([self.delegate respondsToSelector:@selector(detailController:didRemoveGeometryFromFavorites:)])
+            [self.delegate detailController:self didRemoveGeometryFromFavorites:self.geometry];
+        
+        self.isGeometryInFavorites = NO;
+    }
+    [self updateFavoriteButtonState];
 }
 
 

@@ -13,11 +13,13 @@
 @class BikeDetailViewController;
 @protocol BikeDetailViewControllerDelegate <NSObject>
 - (void)detailController:(BikeDetailViewController *)controller didAddGeometryToFavorites:(KMLAbstractGeometry *)geometry;
+- (void)detailController:(BikeDetailViewController *)controller didRemoveGeometryFromFavorites:(KMLAbstractGeometry *)geometry;
 @end
 
 @interface BikeDetailViewController : UIViewController
 
 @property (nonatomic, strong) KMLAbstractGeometry *geometry;
+@property (nonatomic, assign) BOOL isGeometryInFavorites;
 
 @property (nonatomic, weak) id<BikeDetailViewControllerDelegate> delegate;
 
