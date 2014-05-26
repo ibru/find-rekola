@@ -52,7 +52,8 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     self.allGeometries = @[];
     self.favoriteGeometries = @[];
     
-    self.title = NSLocalizedString(@"Nearby bikes", @"");
+    [self.segmentedControl setTitle:NSLocalizedString(@"Nearby", @"") forSegmentAtIndex:0];
+    [self.segmentedControl setTitle:NSLocalizedString(@"Favorites", @"") forSegmentAtIndex:1];
     
     [self indicateLoadingFinished];
     [self reloadAllData];
@@ -65,6 +66,12 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 }
 
 #pragma mark MKMapViewDelegate
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    [self updateSortingAndFiltersFromKMLSource:self.kml];
+    [self.tableView reloadData];
+}
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
