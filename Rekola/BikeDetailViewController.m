@@ -41,36 +41,7 @@ static NSString *const kExtendedDataKeyAddress  = @"address";
     
     self.title = placemark.name;
     
-    
-    MKShape *mkShape = [self.geometry mapkitShape];
-    if (mkShape) {
-        if ([mkShape conformsToProtocol:@protocol(MKOverlay)]) {
-            [self.mapView addOverlay:(id<MKOverlay>)mkShape];
-        }
-        else if ([mkShape isKindOfClass:[MKPointAnnotation class]]) {
-            [self.mapView addAnnotation:mkShape];
-        }
-    }
-    MKMapRect zoomRect = MKMapRectNull;
-    CLLocation *location = [self.geometry location];
-    MKMapPoint annotationPoint = MKMapPointForCoordinate(location.coordinate);
-    MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
-    
-    zoomRect = pointRect;
-
-    // include users location into map visible area
-    annotationPoint = MKMapPointForCoordinate(self.mapView.userLocation.coordinate);
-    pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 0, 0);
-    
-    if (MKMapRectIsNull(zoomRect)) {
-        zoomRect = pointRect;
-    } else {
-        zoomRect = MKMapRectUnion(zoomRect, pointRect);
-    }
-    
-    [self.mapView setVisibleMapRect:zoomRect animated:YES];
-    
-    
+    [self updateMapRegion];
     
     [self updateDistanceFromUsersLocation];
     
@@ -137,6 +108,37 @@ static NSString *const kExtendedDataKeyAddress  = @"address";
 }
 
 #pragma mark Private
+
+- (void)updateMapRegion
+{
+    MKShape *mkShape = [self.geometry mapkitShape];
+    if (mkShape) {
+        if ([mkShape conformsToProtocol:@protocol(MKOverlay)]) {
+            [self.mapView addOverlay:(id<MKOverlay>)mkShape];
+        }
+        else if ([mkShape isKindOfClass:[MKPointAnnotation class]]) {
+            [self.mapView addAnnotation:mkShape];
+        }
+    }
+    MKMapRect zoomRect = MKMapRectNull;
+    CLLocation *location = [self.geometry location];
+    MKMapPoint annotationPoint = MKMapPointForCoordinate(location.coordinate);
+    MKMapRect pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 1000, 1000);
+    
+    zoomRect = pointRect;
+    
+    // include users location into map visible area
+    annotationPoint = MKMapPointForCoordinate(self.mapView.userLocation.coordinate);
+    pointRect = MKMapRectMake(annotationPoint.x, annotationPoint.y, 1000, 1000);
+    zoomRect = MKMapRectUnion(zoomRect, pointRect);
+    
+    double extraZoom = 0.005;
+    MKCoordinateRegion region = MKCoordinateRegionForMapRect(zoomRect);
+    region.span.latitudeDelta += extraZoom;
+    region.span.longitudeDelta += extraZoom;
+    
+    [self.mapView setRegion:region animated:YES];
+}
 
 - (void)updateDistanceFromUsersLocation
 {
