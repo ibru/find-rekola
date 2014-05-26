@@ -1,0 +1,30 @@
+
+/* Class = "IBUIButton"; normalTitle = "Add to favorites"; ObjectID = "3LH-SY-ZPE"; */
+"3LH-SY-ZPE.normalTitle" = "Add to favorites";
+
+/* Class = "IBUILabel"; text = "Unknown address"; ObjectID = "9LG-VP-baT"; */
+"9LG-VP-baT.text" = "Unknown address";
+
+/* Class = "IBUILabel"; text = "No issues"; ObjectID = "AcR-ou-dLo"; */
+"AcR-ou-dLo.text" = "No issues";
+
+/* Class = "IBUISegmentedControl"; BQO-2U-n69.segmentTitles[0] = "Nearby"; ObjectID = "BQO-2U-n69"; */
+"BQO-2U-n69.segmentTitles[0]" = "Nearby";
+
+/* Class = "IBUISegmentedControl"; BQO-2U-n69.segmentTitles[1] = "Favorites"; ObjectID = "BQO-2U-n69"; */
+"BQO-2U-n69.segmentTitles[1]" = "Favorites";
+
+/* Class = "IBUILabel"; text = "Dámské kolo s blatníky, nosičem a protišlapnou brzdou"; ObjectID = "Gdp-ta-AGb"; */
+"Gdp-ta-AGb.text" = "Dámské kolo s blatníky, nosičem a protišlapnou brzdou";
+
+/* Class = "IBUILabel"; text = "1240 m"; ObjectID = "KjU-Ar-bY8"; */
+"KjU-Ar-bY8.text" = "1240 m";
+
+/* Class = "IBUILabel"; text = "No description"; ObjectID = "Krd-LG-J16"; */
+"Krd-LG-J16.text" = "No description";
+
+/* Class = "IBUILabel"; text = "0 m"; ObjectID = "ln5-X7-0C9"; */
+"ln5-X7-0C9.text" = "0 m";
+
+/* Class = "IBUILabel"; text = "Androméda [#331] [vráceno 25. 05.]"; ObjectID = "wtU-eB-cy4"; */
+"wtU-eB-cy4.text" = "Androméda [#331] [vráceno 25. 05.]";

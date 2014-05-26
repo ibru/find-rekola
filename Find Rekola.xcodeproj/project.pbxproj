@@ -51,14 +51,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		491F79961932789D00EF38E4 /* Rekola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Rekola.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		491F79961932789D00EF38E4 /* Find Rekola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Find Rekola.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		491F79991932789D00EF38E4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		491F799B1932789D00EF38E4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		491F799D1932789D00EF38E4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		491F79A11932789D00EF38E4 /* Rekola-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Rekola-Info.plist"; sourceTree = "<group>"; };
+		491F79A11932789D00EF38E4 /* Find Rekola-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Find Rekola-Info.plist"; sourceTree = "<group>"; };
 		491F79A31932789D00EF38E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		491F79A51932789D00EF38E4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		491F79A71932789D00EF38E4 /* Rekola-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Rekola-Prefix.pch"; sourceTree = "<group>"; };
+		491F79A71932789D00EF38E4 /* Find Rekola-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Find Rekola-Prefix.pch"; sourceTree = "<group>"; };
 		491F79A81932789D00EF38E4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		491F79A91932789D00EF38E4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		491F79AC1932789D00EF38E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
@@ -66,9 +66,9 @@
 		491F79B11932789D00EF38E4 /* NearbyBikesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NearbyBikesViewController.h; sourceTree = "<group>"; };
 		491F79B21932789D00EF38E4 /* NearbyBikesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NearbyBikesViewController.m; sourceTree = "<group>"; };
 		491F79B41932789D00EF38E4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Rekola/Images.xcassets; sourceTree = "<group>"; };
-		491F79BA1932789D00EF38E4 /* RekolaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RekolaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		491F79BA1932789D00EF38E4 /* Find RekolaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Find RekolaTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		491F79BB1932789D00EF38E4 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		491F79C31932789D00EF38E4 /* RekolaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RekolaTests-Info.plist"; sourceTree = "<group>"; };
+		491F79C31932789D00EF38E4 /* Find RekolaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Find RekolaTests-Info.plist"; sourceTree = "<group>"; };
 		491F79C51932789D00EF38E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		491F79C71932789D00EF38E4 /* RekolaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RekolaTests.m; sourceTree = "<group>"; };
 		491F79D519327B0F00EF38E4 /* KML+MapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KML+MapKit.h"; sourceTree = "<group>"; };
@@ -102,6 +102,10 @@
 		491F7A011933319500EF38E4 /* BikeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BikeDetailViewController.m; sourceTree = "<group>"; };
 		491F7A04193335A900EF38E4 /* KMLAbstractGeometry+Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KMLAbstractGeometry+Location.h"; sourceTree = "<group>"; };
 		491F7A05193335A900EF38E4 /* KMLAbstractGeometry+Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KMLAbstractGeometry+Location.m"; sourceTree = "<group>"; };
+		491F7A071933E67D00EF38E4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
+		491F7A081933E67E00EF38E4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Main_iPad.strings; sourceTree = "<group>"; };
+		491F7A091933E67E00EF38E4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		491F7A0A1933E67E00EF38E4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DE76471B414E4395AF679AA4 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F049A75A63C04208842ED796 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -148,8 +152,8 @@
 		491F79971932789D00EF38E4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				491F79961932789D00EF38E4 /* Rekola.app */,
-				491F79BA1932789D00EF38E4 /* RekolaTests.xctest */,
+				491F79961932789D00EF38E4 /* Find Rekola.app */,
+				491F79BA1932789D00EF38E4 /* Find RekolaTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -183,10 +187,10 @@
 		491F79A01932789D00EF38E4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				491F79A11932789D00EF38E4 /* Rekola-Info.plist */,
+				491F79A11932789D00EF38E4 /* Find Rekola-Info.plist */,
 				491F79A21932789D00EF38E4 /* InfoPlist.strings */,
 				491F79A51932789D00EF38E4 /* main.m */,
-				491F79A71932789D00EF38E4 /* Rekola-Prefix.pch */,
+				491F79A71932789D00EF38E4 /* Find Rekola-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			path = Rekola;
@@ -204,7 +208,7 @@
 		491F79C21932789D00EF38E4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				491F79C31932789D00EF38E4 /* RekolaTests-Info.plist */,
+				491F79C31932789D00EF38E4 /* Find RekolaTests-Info.plist */,
 				491F79C41932789D00EF38E4 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -307,9 +311,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		491F79951932789D00EF38E4 /* Rekola */ = {
+		491F79951932789D00EF38E4 /* Find Rekola */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 491F79CB1932789E00EF38E4 /* Build configuration list for PBXNativeTarget "Rekola" */;
+			buildConfigurationList = 491F79CB1932789E00EF38E4 /* Build configuration list for PBXNativeTarget "Find Rekola" */;
 			buildPhases = (
 				563EF268C2894D44A1750584 /* Check Pods Manifest.lock */,
 				491F79921932789D00EF38E4 /* Sources */,
@@ -321,14 +325,14 @@
 			);
 			dependencies = (
 			);
-			name = Rekola;
+			name = "Find Rekola";
 			productName = Rekola;
-			productReference = 491F79961932789D00EF38E4 /* Rekola.app */;
+			productReference = 491F79961932789D00EF38E4 /* Find Rekola.app */;
 			productType = "com.apple.product-type.application";
 		};
-		491F79B91932789D00EF38E4 /* RekolaTests */ = {
+		491F79B91932789D00EF38E4 /* Find RekolaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 491F79CE1932789E00EF38E4 /* Build configuration list for PBXNativeTarget "RekolaTests" */;
+			buildConfigurationList = 491F79CE1932789E00EF38E4 /* Build configuration list for PBXNativeTarget "Find RekolaTests" */;
 			buildPhases = (
 				491F79B61932789D00EF38E4 /* Sources */,
 				491F79B71932789D00EF38E4 /* Frameworks */,
@@ -339,9 +343,9 @@
 			dependencies = (
 				491F79C01932789D00EF38E4 /* PBXTargetDependency */,
 			);
-			name = RekolaTests;
+			name = "Find RekolaTests";
 			productName = RekolaTests;
-			productReference = 491F79BA1932789D00EF38E4 /* RekolaTests.xctest */;
+			productReference = 491F79BA1932789D00EF38E4 /* Find RekolaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -358,21 +362,22 @@
 					};
 				};
 			};
-			buildConfigurationList = 491F79911932789D00EF38E4 /* Build configuration list for PBXProject "Rekola" */;
+			buildConfigurationList = 491F79911932789D00EF38E4 /* Build configuration list for PBXProject "Find Rekola" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				cs,
 			);
 			mainGroup = 491F798D1932789D00EF38E4;
 			productRefGroup = 491F79971932789D00EF38E4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				491F79951932789D00EF38E4 /* Rekola */,
-				491F79B91932789D00EF38E4 /* RekolaTests */,
+				491F79951932789D00EF38E4 /* Find Rekola */,
+				491F79B91932789D00EF38E4 /* Find RekolaTests */,
 			);
 		};
 /* End PBXProject section */
@@ -470,7 +475,7 @@
 /* Begin PBXTargetDependency section */
 		491F79C01932789D00EF38E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 491F79951932789D00EF38E4 /* Rekola */;
+			target = 491F79951932789D00EF38E4 /* Find Rekola */;
 			targetProxy = 491F79BF1932789D00EF38E4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -480,6 +485,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				491F79A31932789D00EF38E4 /* en */,
+				491F7A091933E67E00EF38E4 /* cs */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -488,6 +494,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				491F79AC1932789D00EF38E4 /* Base */,
+				491F7A071933E67D00EF38E4 /* cs */,
 			);
 			name = Main_iPhone.storyboard;
 			path = Rekola;
@@ -497,6 +504,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				491F79AF1932789D00EF38E4 /* Base */,
+				491F7A081933E67E00EF38E4 /* cs */,
 			);
 			name = Main_iPad.storyboard;
 			path = Rekola;
@@ -506,6 +514,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				491F79C51932789D00EF38E4 /* en */,
+				491F7A0A1933E67E00EF38E4 /* cs */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -592,9 +601,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Rekola/Rekola-Prefix.pch";
-				INFOPLIST_FILE = "Rekola/Rekola-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Rekola/Find Rekola-Prefix.pch";
+				INFOPLIST_FILE = "Rekola/Find Rekola-Info.plist";
+				PRODUCT_NAME = "Find Rekola";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -606,9 +615,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Rekola/Rekola-Prefix.pch";
-				INFOPLIST_FILE = "Rekola/Rekola-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Rekola/Find Rekola-Prefix.pch";
+				INFOPLIST_FILE = "Rekola/Find Rekola-Info.plist";
+				PRODUCT_NAME = "Find Rekola";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -628,8 +637,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "RekolaTests/RekolaTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "RekolaTests/Find RekolaTests-Info.plist";
+				PRODUCT_NAME = "Find RekolaTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -646,8 +655,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Rekola/Rekola-Prefix.pch";
-				INFOPLIST_FILE = "RekolaTests/RekolaTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "RekolaTests/Find RekolaTests-Info.plist";
+				PRODUCT_NAME = "Find RekolaTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -656,7 +665,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		491F79911932789D00EF38E4 /* Build configuration list for PBXProject "Rekola" */ = {
+		491F79911932789D00EF38E4 /* Build configuration list for PBXProject "Find Rekola" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				491F79C91932789E00EF38E4 /* Debug */,
@@ -665,7 +674,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		491F79CB1932789E00EF38E4 /* Build configuration list for PBXNativeTarget "Rekola" */ = {
+		491F79CB1932789E00EF38E4 /* Build configuration list for PBXNativeTarget "Find Rekola" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				491F79CC1932789E00EF38E4 /* Debug */,
@@ -674,7 +683,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		491F79CE1932789E00EF38E4 /* Build configuration list for PBXNativeTarget "RekolaTests" */ = {
+		491F79CE1932789E00EF38E4 /* Build configuration list for PBXNativeTarget "Find RekolaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				491F79CF1932789E00EF38E4 /* Debug */,
