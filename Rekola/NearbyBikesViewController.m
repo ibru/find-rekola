@@ -221,7 +221,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
             [self.tableView reloadData];
         } failure:^(NSError *error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                                message:NSLocalizedString(@"Failed to read the KML file", nil)
+                                                                message:[error localizedDescription]
                                                                delegate:nil
                                                       cancelButtonTitle:NSLocalizedString(@"OK", nil)
                                                       otherButtonTitles:nil];

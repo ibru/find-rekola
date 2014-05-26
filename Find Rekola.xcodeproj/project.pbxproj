@@ -37,6 +37,7 @@
 		491F79FE1932809900EF38E4 /* NearbyBikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F79FD1932809900EF38E4 /* NearbyBikeCell.m */; };
 		491F7A021933319500EF38E4 /* BikeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F7A011933319500EF38E4 /* BikeDetailViewController.m */; };
 		491F7A06193335A900EF38E4 /* KMLAbstractGeometry+Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F7A05193335A900EF38E4 /* KMLAbstractGeometry+Location.m */; };
+		491F7A0D1933E7EA00EF38E4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 491F7A0F1933E7EA00EF38E4 /* Localizable.strings */; };
 		CB7F75D478B74CEE9A577825 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F049A75A63C04208842ED796 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -106,6 +107,9 @@
 		491F7A081933E67E00EF38E4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		491F7A091933E67E00EF38E4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		491F7A0A1933E67E00EF38E4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		491F7A0E1933E7EA00EF38E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		491F7A101933E7EE00EF38E4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		491F7A111933E7F000EF38E4 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DE76471B414E4395AF679AA4 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F049A75A63C04208842ED796 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -191,6 +195,7 @@
 				491F79A21932789D00EF38E4 /* InfoPlist.strings */,
 				491F79A51932789D00EF38E4 /* main.m */,
 				491F79A71932789D00EF38E4 /* Find Rekola-Prefix.pch */,
+				491F7A0F1933E7EA00EF38E4 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			path = Rekola;
@@ -387,6 +392,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				491F7A0D1933E7EA00EF38E4 /* Localizable.strings in Resources */,
 				491F79B01932789D00EF38E4 /* Main_iPad.storyboard in Resources */,
 				491F79B51932789D00EF38E4 /* Images.xcassets in Resources */,
 				491F79AD1932789D00EF38E4 /* Main_iPhone.storyboard in Resources */,
@@ -517,6 +523,16 @@
 				491F7A0A1933E67E00EF38E4 /* cs */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		491F7A0F1933E7EA00EF38E4 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				491F7A0E1933E7EA00EF38E4 /* en */,
+				491F7A101933E7EE00EF38E4 /* Base */,
+				491F7A111933E7F000EF38E4 /* cs */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

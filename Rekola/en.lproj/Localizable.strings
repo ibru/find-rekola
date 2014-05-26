@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  Find Rekola
+
+  Created by Jiri Urbasek on 26/05/14.
+  Copyright (c) 2014 Jiri Urbasek. All rights reserved.
+*/
+
+/* No comment provided by engineer. */
+"Add to favorites" = "Add to favorites";
+
+/* No comment provided by engineer. */
+"Address is unknown" = "Address is unknown";
+
+/* No comment provided by engineer. */
+"Could not read objects data because of unknown error" = "Could not read objects data because of unknown error";
+
+/* No comment provided by engineer. */
+"Error" = "Error";
+
+/* No comment provided by engineer. */
+"Favorites" = "Favorites";
+
+/* No comment provided by engineer. */
+"Nearby" = "Nearby";
+
+/* No comment provided by engineer. */
+"No issues with the bike" = "No issues with the bike";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Remove from favorites" = "Remove from favorites";
