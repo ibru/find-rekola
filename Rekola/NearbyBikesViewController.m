@@ -12,6 +12,8 @@
 #import "MKMap+KML.h"
 #import "SVProgressHUD.h"
 #import "NearbyBikeCell.h"
+#import "KMLAbstractGeometry+Location.h"
+#import "BikeDetailViewController.h"
 
 
 #define NEARBY_IDX      0
@@ -21,10 +23,6 @@ static NSString *const kKMLSourceURL        = @"http://moje.rekola.cz/api/bikes/
 
 static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 
-
-@interface KMLAbstractGeometry (DistanceCompare)
-- (CLLocation *)location;
-@end
 
 #pragma mark -
 
@@ -97,7 +95,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 {
     if ([view.annotation isKindOfClass:[MKPointAnnotation class]]) {
         MKPointAnnotation *pointAnnotation = (MKPointAnnotation *)view.annotation;
-        //[self pushDetailViewControllerWithGeometry:pointAnnotation.geometry];
+        [self pushDetailViewControllerWithGeometry:pointAnnotation.geometry];
     }
 }
 
@@ -157,13 +155,6 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
             [self.mapView selectAnnotation:currentAnnotation animated:YES];
         }
     }
-}
-
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    KMLAbstractGeometry *geometry = self.desiredGeometries[indexPath.row];
-    
-    //[self pushDetailViewControllerWithGeometry:geometry];
 }
 
 #pragma mark Public
@@ -351,6 +342,15 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     return self.allGeometries;
 }
 
+- (void)pushDetailViewControllerWithGeometry:(KMLAbstractGeometry *)geometry
+{
+    BikeDetailViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"BikeDetailViewController"];
+    if (viewController) {
+        viewController.geometry = geometry;
+        [self.navigationController pushViewController:viewController animated:YES];
+    }
+}
+
 #pragma mark -- actions
 
 - (void)refreshButtonTouched:(id)sender
@@ -362,20 +362,6 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 {
     [self reloadMapView];
     [self.tableView reloadData];
-}
-
-@end
-
-#pragma mark -
-
-@implementation KMLAbstractGeometry (DistanceCompare)
-
-- (CLLocation *)location
-{
-    MKShape *shape = [self mapkitShape];
-    CLLocation *location = [[CLLocation alloc] initWithLatitude:shape.coordinate.latitude
-                                                      longitude:shape.coordinate.longitude];
-    return location;
 }
 
 @end

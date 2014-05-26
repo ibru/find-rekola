@@ -35,6 +35,8 @@
 		491F79F819327B0F00EF38E4 /* MKShape+KML.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F79ED19327B0F00EF38E4 /* MKShape+KML.m */; };
 		491F79FA1932805D00EF38E4 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 491F79F91932805D00EF38E4 /* MapKit.framework */; };
 		491F79FE1932809900EF38E4 /* NearbyBikeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F79FD1932809900EF38E4 /* NearbyBikeCell.m */; };
+		491F7A021933319500EF38E4 /* BikeDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F7A011933319500EF38E4 /* BikeDetailViewController.m */; };
+		491F7A06193335A900EF38E4 /* KMLAbstractGeometry+Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 491F7A05193335A900EF38E4 /* KMLAbstractGeometry+Location.m */; };
 		CB7F75D478B74CEE9A577825 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F049A75A63C04208842ED796 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +98,10 @@
 		491F79F91932805D00EF38E4 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		491F79FC1932809900EF38E4 /* NearbyBikeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearbyBikeCell.h; sourceTree = "<group>"; };
 		491F79FD1932809900EF38E4 /* NearbyBikeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearbyBikeCell.m; sourceTree = "<group>"; };
+		491F7A001933319500EF38E4 /* BikeDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BikeDetailViewController.h; sourceTree = "<group>"; };
+		491F7A011933319500EF38E4 /* BikeDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BikeDetailViewController.m; sourceTree = "<group>"; };
+		491F7A04193335A900EF38E4 /* KMLAbstractGeometry+Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KMLAbstractGeometry+Location.h"; sourceTree = "<group>"; };
+		491F7A05193335A900EF38E4 /* KMLAbstractGeometry+Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KMLAbstractGeometry+Location.m"; sourceTree = "<group>"; };
 		DE76471B414E4395AF679AA4 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F049A75A63C04208842ED796 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -167,6 +173,7 @@
 				491F79A81932789D00EF38E4 /* AppDelegate.h */,
 				491F79A91932789D00EF38E4 /* AppDelegate.m */,
 				491F79D319327AB500EF38E4 /* Screens */,
+				491F7A031933355400EF38E4 /* Additions */,
 				491F79D419327B0F00EF38E4 /* KML+MapKit */,
 				491F79E219327B0F00EF38E4 /* MKMap+KML */,
 			);
@@ -225,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				491F79FB1932806F00EF38E4 /* Nearby bikes */,
+				491F79FF1933313B00EF38E4 /* Bike detail */,
 			);
 			name = Screens;
 			sourceTree = "<group>";
@@ -276,6 +284,24 @@
 				491F79FD1932809900EF38E4 /* NearbyBikeCell.m */,
 			);
 			name = "Nearby bikes";
+			sourceTree = "<group>";
+		};
+		491F79FF1933313B00EF38E4 /* Bike detail */ = {
+			isa = PBXGroup;
+			children = (
+				491F7A001933319500EF38E4 /* BikeDetailViewController.h */,
+				491F7A011933319500EF38E4 /* BikeDetailViewController.m */,
+			);
+			name = "Bike detail";
+			sourceTree = "<group>";
+		};
+		491F7A031933355400EF38E4 /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				491F7A04193335A900EF38E4 /* KMLAbstractGeometry+Location.h */,
+				491F7A05193335A900EF38E4 /* KMLAbstractGeometry+Location.m */,
+			);
+			name = Additions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -412,7 +438,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				491F79F719327B0F00EF38E4 /* MKPolylineView+KML.m in Sources */,
+				491F7A06193335A900EF38E4 /* KMLAbstractGeometry+Location.m in Sources */,
 				491F79EE19327B0F00EF38E4 /* KMLAbstractGeometry+MapKit.m in Sources */,
+				491F7A021933319500EF38E4 /* BikeDetailViewController.m in Sources */,
 				491F79F019327B0F00EF38E4 /* KMLPlacemark+MapKit.m in Sources */,
 				491F79F119327B0F00EF38E4 /* KMLPoint+MapKit.m in Sources */,
 				491F79F819327B0F00EF38E4 /* MKShape+KML.m in Sources */,
