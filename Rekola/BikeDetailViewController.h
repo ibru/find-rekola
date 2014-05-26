@@ -10,8 +10,15 @@
 #import "KMLAbstractGeometry.h"
 
 
+@class BikeDetailViewController;
+@protocol BikeDetailViewControllerDelegate <NSObject>
+- (void)detailController:(BikeDetailViewController *)controller didAddGeometryToFavorites:(KMLAbstractGeometry *)geometry;
+@end
+
 @interface BikeDetailViewController : UIViewController
 
 @property (nonatomic, strong) KMLAbstractGeometry *geometry;
+
+@property (nonatomic, weak) id<BikeDetailViewControllerDelegate> delegate;
 
 @end

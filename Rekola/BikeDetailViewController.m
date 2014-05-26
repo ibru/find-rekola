@@ -69,15 +69,8 @@
     NSString *objectID = self.geometry.placemark.objectID;
     
     if (objectID != nil) {
-        NSMutableArray *objectIDs = [[NSUserDefaults standardUserDefaults] arrayForKey:kUserDefaultsFavoritePlacesKey].mutableCopy;
-        
-        if (objectIDs == nil)
-            objectIDs = [NSMutableArray array];
-        
-        [objectIDs addObject:objectID];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:objectIDs forKey:kUserDefaultsFavoritePlacesKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        if ([self.delegate respondsToSelector:@selector(detailController:didAddGeometryToFavorites:)])
+            [self.delegate detailController:self didAddGeometryToFavorites:self.geometry];
     }
 }
 

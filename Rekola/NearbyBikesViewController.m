@@ -26,7 +26,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 
 #pragma mark -
 
-@interface NearbyBikesViewController () <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface NearbyBikesViewController () <MKMapViewDelegate, UITableViewDataSource, UITableViewDelegate, BikeDetailViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -157,6 +157,33 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
     }
 }
 
+#pragma mark BikeDetailViewControllerDelegate
+
+- (void)detailController:(BikeDetailViewController *)controller didAddGeometryToFavorites:(KMLAbstractGeometry *)geometry
+{
+    NSString *objectID = geometry.placemark.objectID;
+    if (objectID == nil)
+        return;
+    
+    NSMutableArray *objectIDs = [[NSUserDefaults standardUserDefaults] arrayForKey:kUserDefaultsFavoritePlacesKey].mutableCopy;
+    
+    if (objectIDs == nil)
+        objectIDs = [NSMutableArray array];
+    
+    [objectIDs addObject:objectID];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:objectIDs forKey:kUserDefaultsFavoritePlacesKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self updateSortingAndFiltersFromKMLSource:self.kml];
+    
+    // reload views if this controler is visible
+    if (self.view.window) {
+        [self reloadMapView];
+        [self.tableView reloadData];
+    }
+}
+
 #pragma mark Public
 
 #pragma mark Private
@@ -204,32 +231,7 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
         
         if (self.kml) {
             
-            self.allGeometries = [self.kml.geometries sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                
-                if (![obj1 isKindOfClass:[KMLAbstractGeometry class]] || ![obj1 isKindOfClass:[KMLAbstractGeometry class]])
-                    return NSOrderedSame;
-                
-                CLLocationDistance meters1 = [self.mapView.userLocation.location distanceFromLocation:[(KMLAbstractGeometry *)obj1 location]];
-                CLLocationDistance meters2 = [self.mapView.userLocation.location distanceFromLocation:[(KMLAbstractGeometry *)obj2 location]];
-                
-                if (meters1 > meters2)
-                    return NSOrderedDescending;
-                else if (meters1 < meters2)
-                    return NSOrderedAscending;
-                return NSOrderedSame;
-            }];
-            
-            NSMutableArray *favoriteGeometries = [NSMutableArray array];
-            NSArray *favoriteObjectIDs = [[NSUserDefaults standardUserDefaults] arrayForKey:kUserDefaultsFavoritePlacesKey];
-            
-            for (KMLAbstractGeometry *geometry in self.allGeometries) {
-                if ([favoriteGeometries count] >= [favoriteObjectIDs count])
-                    break;
-                
-                if ([favoriteObjectIDs containsObject:geometry.placemark.objectID])
-                    [favoriteGeometries addObject:geometry];
-            }
-            self.favoriteGeometries = favoriteGeometries;
+            [self updateSortingAndFiltersFromKMLSource:self.kml];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self indicateLoadingFinished];
@@ -249,6 +251,36 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
             });
         }
     });
+}
+
+- (void)updateSortingAndFiltersFromKMLSource:(KMLRoot *)kml
+{
+    self.allGeometries = [kml.geometries sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        
+        if (![obj1 isKindOfClass:[KMLAbstractGeometry class]] || ![obj1 isKindOfClass:[KMLAbstractGeometry class]])
+            return NSOrderedSame;
+        
+        CLLocationDistance meters1 = [self.mapView.userLocation.location distanceFromLocation:[(KMLAbstractGeometry *)obj1 location]];
+        CLLocationDistance meters2 = [self.mapView.userLocation.location distanceFromLocation:[(KMLAbstractGeometry *)obj2 location]];
+        
+        if (meters1 > meters2)
+            return NSOrderedDescending;
+        else if (meters1 < meters2)
+            return NSOrderedAscending;
+        return NSOrderedSame;
+    }];
+    
+    NSMutableArray *favoriteGeometries = [NSMutableArray array];
+    NSArray *favoriteObjectIDs = [[NSUserDefaults standardUserDefaults] arrayForKey:kUserDefaultsFavoritePlacesKey];
+    
+    for (KMLAbstractGeometry *geometry in self.allGeometries) {
+        if ([favoriteGeometries count] >= [favoriteObjectIDs count])
+            break;
+        
+        if ([favoriteObjectIDs containsObject:geometry.placemark.objectID])
+            [favoriteGeometries addObject:geometry];
+    }
+    self.favoriteGeometries = favoriteGeometries;
 }
 
 - (void)reloadMapView
@@ -347,6 +379,8 @@ static NSString *const kCellIdentifier      = @"Nearby Bike Cell";
 - (void)pushDetailViewControllerWithGeometry:(KMLAbstractGeometry *)geometry
 {
     BikeDetailViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"BikeDetailViewController"];
+    viewController.delegate = self;
+    
     if (viewController) {
         viewController.geometry = geometry;
         [self.navigationController pushViewController:viewController animated:YES];
