@@ -12,4 +12,12 @@ Lot's of code is borrowed from [iOS KML Framework](http://kmlframework.com) and 
 2. instal CocoaPods
 3. Build & Run
 
+# License
+
+Feel free to download and use the app or any of it's code.
+Don't put the app into AppStore please.
+
+![Find Rekola app showcase](https://dl.dropboxusercontent.com/u/2932766/find-rekola.gif)
+
+
 
